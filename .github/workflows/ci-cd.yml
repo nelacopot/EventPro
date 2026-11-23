@@ -42,12 +42,6 @@ jobs:
   test:
     name: Test Frontend and Backend
     runs-on: ubuntu-latest
-  build:
-    name: Build Frontend and Backend
-    runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/eventpro
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
