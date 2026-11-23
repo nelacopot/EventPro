@@ -1,5 +1,7 @@
 
-const API_URL = "http://localhost:3001/api/reservations";
+import { API_URL } from "./api";
+
+const RESERVATIONS_API_URL = `${API_URL}/api/reservations`;
 
 export interface Reservation {
   id: string;
@@ -45,7 +47,7 @@ async function request<T>(
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${RESERVATIONS_API_URL}${path}`, {
     ...options,
     headers,
   });

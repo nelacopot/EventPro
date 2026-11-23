@@ -1,5 +1,7 @@
 
-const API_URL = "http://localhost:3001/api/schedule";
+import { API_URL } from "./api";
+
+const SCHEDULE_API_URL = `${API_URL}/api/schedule`;
 
 export interface Room {
   id: string;
@@ -72,7 +74,7 @@ async function request<T>(
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${SCHEDULE_API_URL}${path}`, {
     ...options,
     headers,
   });
