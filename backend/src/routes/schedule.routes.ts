@@ -8,6 +8,7 @@ import {
   requireAuth,
   type AuthRequest,
 } from "../middleware/auth.middleware.js";
+import { isValidTimeRange } from "../lib/scheduling.js";
 
 const router = Router();
 
@@ -54,14 +55,6 @@ function handleError(res: Response, error: unknown) {
   res.status(500).json({
     message: "An unexpected server error occurred.",
   });
-}
-
-function isValidTimeRange(start: Date, end: Date) {
-  return (
-    !Number.isNaN(start.getTime()) &&
-    !Number.isNaN(end.getTime()) &&
-    start < end
-  );
 }
 
 /*

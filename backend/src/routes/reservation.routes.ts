@@ -3,10 +3,10 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
 import { requireAuth, type AuthRequest } from "../middleware/auth.middleware.js";
+import { buildSeatNumbers } from "../lib/scheduling.js";
 
 const router = Router();
 const uuidSchema = z.string().uuid();
-const SEATS_PER_ROW = 10;
 
 async function getAttendee(userId?: string) {
   if (!userId) return null;
@@ -24,22 +24,6 @@ function serverError(res: Response, error: unknown) {
     return;
   }
   res.status(500).json({ message: "An unexpected server error occurred." });
-}
-
-function buildSeatNumbers(capacity: number): string[] {
-  const result: string[] = [];
-  for (let i = 0; i < capacity; i += 1) {
-    const rowIndex = Math.floor(i / SEATS_PER_ROW);
-    // Rows A-Z; for larger rooms continue AA, AB, etc.
-    let index = rowIndex;
-    let row = "";
-    do {
-      row = String.fromCharCode(65 + (index % 26)) + row;
-      index = Math.floor(index / 26) - 1;
-    } while (index >= 0);
-    result.push(`${row}${(i % SEATS_PER_ROW) + 1}`);
-  }
-  return result;
 }
 
 // Serialize reservation and waitlist changes for the same talk.
