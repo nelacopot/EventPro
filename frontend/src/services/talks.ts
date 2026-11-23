@@ -1,5 +1,7 @@
 
-const API_URL = "http://localhost:3001/api/talks";
+import { API_URL } from "./api";
+
+const TALKS_API_URL = `${API_URL}/api/talks`;
 
 export type TalkStatus = "PENDING" | "ACCEPTED" | "REJECTED";
 
@@ -54,7 +56,7 @@ async function talkRequest<T>(
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${TALKS_API_URL}${path}`, {
     ...options,
     headers,
   });

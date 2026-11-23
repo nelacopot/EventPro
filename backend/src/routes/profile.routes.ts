@@ -10,6 +10,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import { prisma } from "../lib/prisma.js";
+import { uploadsDirectory } from "../lib/uploads.js";
 import {
   requireAuth,
   type AuthRequest,
@@ -17,11 +18,7 @@ import {
 
 const router = Router();
 
-const uploadDirectory = path.resolve(
-  process.cwd(),
-  "uploads",
-  "avatars"
-);
+const uploadDirectory = path.join(uploadsDirectory, "avatars");
 
 const publicProfileSelect = {
   id: true,
