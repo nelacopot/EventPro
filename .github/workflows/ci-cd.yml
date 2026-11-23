@@ -169,9 +169,11 @@ jobs:
       - name: Validate deployment settings
         env:
           AZURE_WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+          AZURE_WEBAPP_HOSTNAME: ${{ vars.AZURE_WEBAPP_HOSTNAME }}
           AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         run: |
           test -n "$AZURE_WEBAPP_NAME" || { echo "Set production environment variable AZURE_WEBAPP_NAME."; exit 1; }
+          test -n "$AZURE_WEBAPP_HOSTNAME" || { echo "Set production environment variable AZURE_WEBAPP_HOSTNAME to the app's default hostname."; exit 1; }
           test -n "$AZURE_WEBAPP_PUBLISH_PROFILE" || { echo "Set production environment secret AZURE_WEBAPP_PUBLISH_PROFILE."; exit 1; }
 
       - name: Download build artifacts
@@ -189,7 +191,7 @@ jobs:
 
       - name: Check deployed application
         env:
-          AZURE_WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+          AZURE_WEBAPP_HOSTNAME: ${{ vars.AZURE_WEBAPP_HOSTNAME }}
         run: |
-          curl --fail --retry 10 --retry-delay 10 "https://${AZURE_WEBAPP_NAME}.azurewebsites.net/"
-          curl --fail "https://${AZURE_WEBAPP_NAME}.azurewebsites.net/api/health"
+          curl --fail --retry 10 --retry-delay 10 "https://${AZURE_WEBAPP_HOSTNAME}/"
+          curl --fail "https://${AZURE_WEBAPP_HOSTNAME}/api/health"
