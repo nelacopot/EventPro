@@ -7,6 +7,7 @@ import path from "node:path";
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma.js";
+import { uploadsDirectory } from "../lib/uploads.js";
 import { lockTalk, promoteFromWaitlist } from "./reservation.routes.js";
 import {
   requireAuth,
@@ -425,7 +426,7 @@ router.delete(
 
 /* Conference cover image, duplication and archiving */
 
-const conferenceImageDirectory = path.resolve(process.cwd(), "uploads", "conferences");
+const conferenceImageDirectory = path.join(uploadsDirectory, "conferences");
 const imageUpload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024, files: 1 },

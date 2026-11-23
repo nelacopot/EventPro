@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
+import path from "node:path";
 
 import { prisma } from "./lib/prisma.js";
 
@@ -12,10 +13,9 @@ import reservationRoutes from "./routes/reservation.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
 import statisticsRoutes from "./routes/statistics.routes.js";
 import fs from "node:fs";
-import path from "node:path";
+import { uploadsDirectory } from "./lib/uploads.js";
 
 const app = express();
-const uploadsDirectory = path.resolve(process.cwd(), "uploads");
 fs.mkdirSync(path.join(uploadsDirectory, "avatars"), { recursive: true });
 app.use("/uploads", express.static(uploadsDirectory));
 const PORT = Number(process.env.PORT) || 3001;
@@ -43,6 +43,16 @@ app.get("/api/health/db", async (_req, res) => {
     console.error("Database connection failed:", error);
     res.status(503).json({ status: "error", message: "Cannot connect to database" });
   }
+});
+
+const frontendDirectory = path.resolve(process.cwd(), "public");
+app.use(express.static(frontendDirectory));
+app.get(/.*/, (req, res, next) => {
+  if (req.path.startsWith("/api/")) {
+    next();
+    return;
+  }
+  res.sendFile(path.join(frontendDirectory, "index.html"));
 });
 
 app.listen(PORT, () => {
