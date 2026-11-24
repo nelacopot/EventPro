@@ -1,5 +1,21 @@
 # EventPro
 
+[![Status cevovoda](https://github.com/nelacopot/EventPro/actions/workflows/ci-cd.yml/badge.svg?branch=main)](https://github.com/nelacopot/EventPro/actions/workflows/ci-cd.yml)
+
+**Nameščena aplikacija:** [EventPro](https://eventpro-jtk0.onrender.com)
+
+## Cevovod CI
+
+Ob spremembah na veji `main` in ob pull requestih GitHub Actions izvede tri faze:
+
+1. **Lint:** preveri slog in osnovne napake v frontend in backend kodi.
+2. **Test:** zažene teste frontenda in backenda ter shrani poročila o pokritosti.
+3. **Build:** zgradi frontend in backend ter ustvari Prisma Client.
+
+Render je povezan z repozitorijem in po uspešni objavi sprememb na `main` samodejno zgradi ter objavi aplikacijo.
+
+## Opis
+
 EventPro je spletna aplikacija za organizacijo konferenc, seminarjev in delavnic. Organizatorjem omogoča upravljanje konferenc, predavateljem oddajo predlogov predavanj, udeležencem pa prijavo na konference, rezervacijo sedežev in upravljanje osebnega urnika.
 
 Projekt je razvit v okviru študijskih nalog in vključuje implementacijo MVP funkcionalnosti.
